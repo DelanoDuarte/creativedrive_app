@@ -64,4 +64,23 @@ public abstract class BaseService<T, ID> implements com.creativedrive.service.Ba
 		return Optional.of(repository.findAll(Example.of(t), PageRequest.of(page, size)));
 	}
 
+	@Override
+	public void delete(T t) {
+		repository.delete(t);
+	}
+
+	@Override
+	public void deleteById(ID id) {
+		repository.deleteById(id);
+	}
+
+	@Override
+	public void deleteAll(List<T> ts) {
+		repository.deleteAll(ts);
+	}
+
+	@Override
+	public void deleteAllRecords() {
+		repository.deleteAll();
+	}
 }
