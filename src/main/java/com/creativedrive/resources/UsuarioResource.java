@@ -11,8 +11,9 @@ import javax.ws.rs.core.MediaType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -54,7 +55,7 @@ public class UsuarioResource implements Serializable {
 	@GetMapping("/find")
 	private ResponseEntity<?> findAllPagineted(@RequestParam("page") Integer page, @RequestParam("size") Integer size) {
 		try {
-			return ResponseEntity.ok(usuarioService.findAllPagineted(page, size));
+			return ResponseEntity.ok(usuarioService.findAllPaginated(page, size));
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
@@ -74,7 +75,7 @@ public class UsuarioResource implements Serializable {
 		}
 	}
 
-	@Secured({"ADMIN"})
+	@PreAuthorize("ADMIN")
 	@PostMapping(consumes = MediaType.APPLICATION_JSON)
 	private ResponseEntity<?> save(@RequestBody Usuario usuario) {
 		try {
@@ -88,6 +89,16 @@ public class UsuarioResource implements Serializable {
 	private ResponseEntity<?> findOne(@PathVariable("id") String id) {
 		try {
 			return ResponseEntity.ok(usuarioService.findOne(id));
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}
+	}
+
+	@DeleteMapping
+	private ResponseEntity<?> deleteById(@PathVariable("id") String id) {
+		try {
+			usuarioService.deleteById(id);
+			return ResponseEntity.ok().build();
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}

@@ -44,7 +44,7 @@ public class UsuarioResourceTest {
 	public void setUp() {
 
 		usuarioService.saveNewUsuario(
-				new Usuario("Jonh Jones", "jonh.jones@email.com", "jonh12345", "Endereco ABC", "8851561651", "USER"));
+				new Usuario("Jonh Jones", "jonh.jones@email.com", "jonh12345", "Endereco ABC", "8851561651", "ADMIN"));
 
 		headers = new HttpHeaders();
 		ResponseEntity<String> token = restTemplate.postForEntity(AUTH_URL,

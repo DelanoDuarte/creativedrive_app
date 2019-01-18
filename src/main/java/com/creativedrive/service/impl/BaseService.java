@@ -40,12 +40,12 @@ public abstract class BaseService<T, ID> implements com.creativedrive.service.Ba
 	}
 
 	@Override
-	public Optional<Page<T>> findAllPagineted(Integer page, Integer size) {
+	public Optional<Page<T>> findAllPaginated(Integer page, Integer size) {
 		return Optional.of(repository.findAll(PageRequest.of(page, size)));
 	}
 
 	@Override
-	public Optional<Page<T>> findAllPaginetedSorted(Integer page, Integer size, String order) {
+	public Optional<Page<T>> findAllPaginatedSorted(Integer page, Integer size, String order) {
 		return Optional.of(repository.findAll(PageRequest.of(page, size, Sort.by(order))));
 	}
 
@@ -60,7 +60,7 @@ public abstract class BaseService<T, ID> implements com.creativedrive.service.Ba
 	}
 
 	@Override
-	public Optional<Page<T>> findAllPaginetedByExample(T t, Integer page, Integer size) {
+	public Optional<Page<T>> findAllPaginatedByExample(T t, Integer page, Integer size) {
 		return Optional.of(repository.findAll(Example.of(t), PageRequest.of(page, size)));
 	}
 

@@ -14,25 +14,37 @@ import org.springframework.data.domain.Page;
  */
 public interface BaseService<T, ID> {
 
+	/*
+	 * save a record of a entity
+	 */
 	public Optional<T> save(T t);
 
+	/*
+	 * save a list of entity list
+	 */
 	public Optional<List<T>> saveAll(List<T> ts);
 
+	/*
+	 * Find all records of entity
+	 */
 	public Optional<List<T>> findAll();
 
-	public Optional<Page<T>> findAllPagineted(Integer page, Integer size);
+	/*
+	 * Find all records of entity paginated
+	 */
+	public Optional<Page<T>> findAllPaginated(Integer page, Integer size);
 
 	/*
-	 * Find all records of entity based in a Entity paginating with page ,size and
-	 * sort order params
+	 * Find all records of entity based in a Entity paginating with page ,size
+	 * and sort order params
 	 */
-	public Optional<Page<T>> findAllPaginetedSorted(Integer page, Integer size, String order);
+	public Optional<Page<T>> findAllPaginatedSorted(Integer page, Integer size, String order);
 
 	/*
-	 * Find all records of entity based in a Entity Example.of and pagination with
-	 * page and size params
+	 * Find all records of entity based in a Entity Example.of and pagination
+	 * with page and size params
 	 */
-	public Optional<Page<T>> findAllPaginetedByExample(T t, Integer page, Integer size);
+	public Optional<Page<T>> findAllPaginatedByExample(T t, Integer page, Integer size);
 
 	/*
 	 * Find a entity object by param id

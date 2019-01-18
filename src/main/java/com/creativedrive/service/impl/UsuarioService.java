@@ -39,7 +39,7 @@ public class UsuarioService extends BaseService<Usuario, String> implements User
 
 			Optional<Usuario> usuario = this.findByExample(new Usuario(email));
 			User user = new User(usuario.get().getNome(), usuario.get().getSenha(),
-					Arrays.asList(new SimpleGrantedAuthority(usuario.get().getPerfil())));
+					Arrays.asList(new SimpleGrantedAuthority("ROLE_" + usuario.get().getPerfil())));
 
 			return user;
 		} catch (Exception e) {
