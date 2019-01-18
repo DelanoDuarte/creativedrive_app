@@ -79,7 +79,8 @@ public class UsuarioResourceTest {
 				Usuario.class);
 
 		ResponseEntity<Usuario> usuario = restTemplate
-				.getForEntity(APP_URL + "/usuario/" + newUsuario.getBody().getId(), null, Usuario.class);
+				.getForEntity(APP_URL + "/usuario/" + newUsuario.getBody().getId(), Usuario.class);
+
 		Assert.assertEquals(emailFinded, usuario.getBody().getEmail());
 	}
 
