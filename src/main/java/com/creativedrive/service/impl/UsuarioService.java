@@ -38,7 +38,7 @@ public class UsuarioService extends BaseService<Usuario, String> implements User
 		try {
 
 			Optional<Usuario> usuario = this.findByExample(new Usuario(email));
-			User user = new User(usuario.get().getNome(), bCryptPasswordEncoder.encode(usuario.get().getSenha()),
+			User user = new User(usuario.get().getNome(), usuario.get().getSenha(),
 					Arrays.asList(new SimpleGrantedAuthority(usuario.get().getPerfil())));
 
 			return user;
@@ -59,7 +59,6 @@ public class UsuarioService extends BaseService<Usuario, String> implements User
 
 			return this.save(usuario);
 		} catch (Exception e) {
-			e.printStackTrace();
 			return null;
 		}
 	}

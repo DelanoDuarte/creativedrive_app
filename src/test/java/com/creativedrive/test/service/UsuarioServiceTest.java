@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.creativedrive.datatest;
+package com.creativedrive.test.service;
 
 import java.util.Arrays;
 import java.util.List;
@@ -10,7 +10,10 @@ import java.util.Optional;
 import org.bson.types.ObjectId;
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureTestEntityManager;
@@ -33,6 +36,17 @@ public class UsuarioServiceTest {
 	@Autowired
 	private UsuarioService usuarioService;
 
+	@Rule
+	public final ExpectedException exception = ExpectedException.none();
+
+	@Before
+	public void setUp() {
+		Usuario usuario = new Usuario("James Cox", "james.cox@email.com", "james123", "Endereco ABC", "8851561651",
+				"USER");
+
+		usuarioService.saveNewUsuario(usuario);
+	}
+
 	@Test
 	public void testsaveNewUsuarioUsuario() {
 		Usuario usuario = new Usuario("Jonh Smith", "jonh.smith@email.com", "jonh123", "Endereco ABC", "8851561651",
@@ -44,7 +58,7 @@ public class UsuarioServiceTest {
 
 	@Test
 	public void testsaveNewUsuarioListUsuarios() {
-		Usuario usuario1 = new Usuario("Jonh Smith", "jonh.smith@email.com", "jonh123", "Endereco ABC", "8851561651",
+		Usuario usuario1 = new Usuario("Jonh Jones", "jonh.jones@email.com", "jonh12345", "Endereco ABC", "8851561651",
 				"USER");
 		Usuario usuario2 = new Usuario("Jamal Jones", "jamal.jones@email.com", "jamal123", "Endereco DEF", "8746545461",
 				"ADMIN");
@@ -60,10 +74,10 @@ public class UsuarioServiceTest {
 	@Test
 	public void testFindUsuarioByExample() {
 
-		String email = "jonh.smith@email.com";
+		String email = "james.cox@email.com";
 
 		Usuario usuario = new Usuario();
-		usuario.setEmail("jonh.smith@email.com");
+		usuario.setEmail("james.cox@email.com");
 
 		Optional<Usuario> usuarioFinded = usuarioService.findByExample(usuario);
 
@@ -86,6 +100,17 @@ public class UsuarioServiceTest {
 		Optional<Usuario> usuarioFinded = usuarioService.findOne(usuariosaved.get().getId());
 
 		Assert.assertEquals(usuariosaved.get().getEmail(), usuarioFinded.get().getEmail());
+	}
+
+	@Test
+	public void testSaveUsuarioWithExistentEmail() {
+		Usuario usuario = new Usuario("James Cox", "james.cox@email.com", "james123", "Endereco ABC", "8851561651",
+				"USER");
+
+		usuarioService.saveNewUsuario(usuario);
+
+		exception.expect(Exception.class);
+		exception.expectMessage("Ja existe um usuário com o Email: " + usuario.getEmail());
 	}
 
 	@After
