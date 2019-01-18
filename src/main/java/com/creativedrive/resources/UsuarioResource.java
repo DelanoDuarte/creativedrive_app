@@ -11,6 +11,7 @@ import javax.ws.rs.core.MediaType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -73,10 +74,11 @@ public class UsuarioResource implements Serializable {
 		}
 	}
 
+	@Secured({"ADMIN"})
 	@PostMapping(consumes = MediaType.APPLICATION_JSON)
 	private ResponseEntity<?> save(@RequestBody Usuario usuario) {
 		try {
-			return ResponseEntity.ok(usuarioService.save(usuario));
+			return ResponseEntity.ok(usuarioService.saveNewUsuario(usuario));
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
